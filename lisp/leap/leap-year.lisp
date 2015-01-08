@@ -4,7 +4,7 @@
 (in-package #:leap)
 
 (defun leap-year-p (year)
-  (cond ((eq (mod year 400) 0) t)
-        ((and (eq (mod year 4) 0) (not (eq (mod year 100) 0))) t)
-        (t nil))
-  )
+  (or (and
+        (zerop (mod year 4))
+        (not (zerop (mod year 100))))
+      (zerop (mod year 400))))

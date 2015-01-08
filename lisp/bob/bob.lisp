@@ -9,7 +9,7 @@
 
 (defun shouting? (phrase)
   (and
-   (find-if #'alpha-char-p phrase :from-end t)
+   (find-if #'alpha-char-p phrase)
    (string= (string-upcase phrase) phrase)))
 
 (defun asking? (phrase)
@@ -17,7 +17,7 @@
        (eq (position #\? (reverse phrase)) 0)))
 
 (defun blank? (phrase)
-  (not (find-if #'(lambda (c) (char/= #\space c)) phrase)))
+  (every #'(lambda (c) (char= #\space c)) phrase))
 
 (defun response-for (input)
   (cond ((shouting? input) "Whoa, chill out!")
