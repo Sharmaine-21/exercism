@@ -5,27 +5,33 @@
 
 (in-package #:robot)
 
-(defparameter *used-names* '('init))
+(setf *random-state* (make-random-state t))
+
+(defparameter *used-names* '())
 
 (defun gen-name ()
   (let* ((chars "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-        (nums "1234567890")
-        (new-name (concatenate 'string
-                               (coerce
-                                (loop repeat 2 collect
-                                     (aref chars (random (length chars)))) 'string)
-                               (coerce
-                                (loop repeat 3 collect
-                                     (aref nums (random (length nums)))) 'string)))) new-name
+         (nums "1234567890"))
+    (concatenate 'string
+                 (coerce
+                  (loop repeat 2 collect
+                       (aref chars (random (length chars) *random-state*))) 'string)
+                 (coerce
+                  (loop repeat 3 collect
+                       (aref nums (random (length nums) *random-state*))) 'string))
     ))
 
-(defun build-robot ()
-  (let ((new-bot '((name . "")))
-        (tname (gen-name)))
-    (loop while (member tname *used-names*) do
+(defun set-name (bot)
+  (let ((tname (gen-name)))
+    (loop while (find tname *used-names* :test #'string=) do
          (setq tname (gen-name)))
-    (cons tname *used-names*)
-    (rplacd (assoc 'name new-bot) tname)
+    (setf *used-names* (cons tname *used-names*))
+    (rplacd (assoc 'name bot) tname))
+  )
+
+(defun build-robot ()
+  (let ((new-bot '((name . ""))))
+    (set-name new-bot)
     new-bot))
 
 
@@ -33,5 +39,6 @@
   (cdr (assoc 'name robot)))
 
 (defun reset-name (robot)
-  (rplacd (assoc 'name robot) (gen-name))
+  (set-name robot)
   robot)
+*used-names*
