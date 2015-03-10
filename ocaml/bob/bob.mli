@@ -14,5 +14,8 @@ Answers to `hey` like a teenager.
 
   # response_for "Coding is cool."
   "Whatever."
-*)
+ *)
+
+let shout = Str.regexp
+
 val response_for : string -> string

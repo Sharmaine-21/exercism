@@ -4,3 +4,6 @@
   (:export #:transform))
 
 (in-package #:etl)
+
+(defun transform (data)
+  )

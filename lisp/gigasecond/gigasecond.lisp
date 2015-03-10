@@ -1,14 +1,17 @@
 (in-package #:cl-user)
 (defpackage #:gigasecond
   (:use #:cl)
-  (:export #:calculate #:from))
+  (:export #:from))
 (in-package #:gigasecond)
 
-(defun calculate (udate)
-  (let ((decoded (multiple-value-list (decode-universal-time udate))))
-    (list (sixth decoded) (fifth decoded) (fourth decoded))))
+(defun calcudate (udate)
+  (multiple-value-bind
+      (s m h day month year)
+      (decode-universal-time udate)
+    (declare (ignore s m h))
+    (list year month day)))
 
 (defun from (year month day)
   (let ((gig (expt 10 9))
         (date (encode-universal-time 0 0 0 day month year)))
-    (calculate (+ gig date))))
+    (calcudate (+ gig date))))
