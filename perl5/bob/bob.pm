@@ -16,9 +16,18 @@ use Exporter 5.57 qw(import);
 our @EXPORT_OK = qw(hey);
 
 sub hey {
-#
-# YOUR CODE GOES HERE
-#
+    my $sentence = shift(@_);
+
+
+    if (($sentence =~ /[A-Z]+/) && ($sentence eq uc($sentence))) {
+        return 'Whoa, chill out!';
+    } elsif ($sentence =~ /.+\?$/amsxi) {
+        return 'Sure.';
+    } elsif ($sentence !~ /\S+/) {
+        return 'Fine. Be that way!';
+    } else {
+        return 'Whatever.';
+    }
 }
 
 1;

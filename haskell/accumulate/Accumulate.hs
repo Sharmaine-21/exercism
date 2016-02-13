@@ -1,8 +1,4 @@
 module Accumulate (accumulate) where
-import Data.List as List
-import Data.Char (toUpper)
 
-accumulate :: [a] -> [a]
-accumulate = do
-  (x:xs) <- Just ["hello"]
-  return x
+accumulate :: (a -> b) -> [a] -> [b]
+accumulate f xs = [f x | x <- xs]

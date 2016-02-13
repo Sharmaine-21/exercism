@@ -6,9 +6,11 @@
 var HelloWorld = function() {};
 
 HelloWorld.prototype.hello = function(input) {
-//
-// YOUR CODE GOES HERE
-//
+    var greeting = function(str) {
+        return "Hello, " + str + "!";
+    };
+
+    return input.length < 1 ? greeting("world") : greeting(input);
 };
 
 module.exports = HelloWorld;
